@@ -1,6 +1,6 @@
 import LayoutWrapper from "@/layout";
+import { DetailsProps } from "@/types";
 import { GetServerSideProps } from "next";
-
 import styled from "styled-components";
 
 const getDate = (dateStr: string) => dateStr.substring(0, 10);
@@ -70,22 +70,6 @@ const ScrollToTopBtn = styled.button`
   cursor: pointer;
   background-color: #333;
 `;
-
-type CommentType = {
-  text: string;
-  id: string;
-  created_at: string;
-};
-
-type DetailsProps = {
-  data: {
-    author: string;
-    created_at: string;
-    title: string;
-    type: string;
-    children: [CommentType];
-  };
-};
 
 function Details(props: DetailsProps) {
   const {

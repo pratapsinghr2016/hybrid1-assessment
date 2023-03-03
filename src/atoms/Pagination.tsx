@@ -1,3 +1,4 @@
+import { PaginationProp } from "@/types";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -25,15 +26,6 @@ const highlightedStyleObj = {
   backgroundColor: "#ff5733",
   color: "#ffffff",
   borderRadius: "2px",
-};
-
-type Fn = () => void;
-
-type PaginationProp = {
-  currentPage: number;
-  onNextClick: Fn;
-  onPrevClick: Fn;
-  onPageNumberClick: (pageNumber: number) => void;
 };
 
 const Pagination = (props: PaginationProp) => {

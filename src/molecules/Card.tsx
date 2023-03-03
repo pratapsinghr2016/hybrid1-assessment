@@ -1,5 +1,6 @@
+import { CardComponentProps } from "@/types";
 import Link from "next/link";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import styled from "styled-components";
 
 const Card = styled.div`
@@ -61,15 +62,6 @@ const TitleContainer = styled.div`
   border-radius: 5rem;
   text-align: center;
 `;
-
-type CardComponentProps = {
-  title: string;
-  author: string;
-  id: string;
-  comments: string;
-  relevancy: string;
-  points: string;
-};
 
 const labelObj = {
   low: {

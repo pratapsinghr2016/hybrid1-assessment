@@ -1,7 +1,7 @@
 import Head from "next/head";
 
 type HeaderType = {
-  title: String;
+  title: string;
 };
 
 export default function Header(props: HeaderType) {

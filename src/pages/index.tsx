@@ -3,6 +3,7 @@ import LayoutWrapper from "@/layout";
 import { CardComponent } from "@/molecules";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { ShowListProp, HomeProps, FnPromise } from "@/types";
 
 const CardSection = styled.section`
   display: flex;
@@ -43,30 +44,13 @@ const SearchContainer = styled.div`
   }
 `;
 
-type ShowListProp = {
-  title: string;
-  author: string;
-  points: string;
-  objectID: string;
-  num_comments: string;
-  relevancy_score: string;
-};
-
-type HomeProps = {
-  data: {
-    hits: [any];
-  };
-};
-
-type Fn = (value: string) => void;
-
 function Home(props: HomeProps) {
   const { data } = props;
   const [dataSt, setDataSt] = useState([]);
   const [searchedValue, setSearchedValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const debounceFn = (fn: Fn) => {
+  const debounceFn = (fn: FnPromise) => {
     let timer: ReturnType<typeof setTimeout> | null = null;
     return function (...args: [any]) {
       if (timer) clearTimeout(timer);
@@ -92,7 +76,7 @@ function Home(props: HomeProps) {
     })();
   }, [currentPage]);
 
-  const inputChangeHandler = debounceFn(async (value: string) => {
+  const inputChangeHandler = debounceFn(async (value: any) => {
     const path =
       process.env.NEXT_PUBLIC_API_URL +
         `/search?query=${value}&page=${currentPage}` || "";

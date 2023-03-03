@@ -1,7 +1,8 @@
 import { Header } from "@/atoms";
 import { NavBarComponent } from "@/molecules";
+import { LayoutProps } from "@/types";
 import Link from "next/link";
-import { Fragment, ReactNode } from "react";
+import { Fragment } from "react";
 import styled from "styled-components";
 
 const StyledLink = styled(Link)`
@@ -54,10 +55,6 @@ const MediaLinkContainer = styled.div`
     background-color: #f5b174;
   }
 `;
-
-type LayoutProps = {
-  children: ReactNode;
-};
 
 const LayoutWrapper = (props: LayoutProps) => {
   return (

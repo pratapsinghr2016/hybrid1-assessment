@@ -1,7 +1,9 @@
 import LayoutWrapper from "@/layout";
+import { GetServerSideProps } from "next";
+
 import styled from "styled-components";
 
-const getDate = (dateStr) => dateStr.substring(0, 10);
+const getDate = (dateStr: string) => dateStr.substring(0, 10);
 
 const Page = styled.section`
   margin-top: 5rem;
@@ -69,7 +71,23 @@ const ScrollToTopBtn = styled.button`
   background-color: #333;
 `;
 
-function Details(props) {
+type CommentType = {
+  text: string;
+  id: string;
+  created_at: string;
+};
+
+type DetailsProps = {
+  data: {
+    author: string;
+    created_at: string;
+    title: string;
+    type: string;
+    children: [CommentType];
+  };
+};
+
+function Details(props: DetailsProps) {
   const {
     data: { author, created_at: date, title, type, children: comments },
   } = props;
@@ -114,13 +132,13 @@ function Details(props) {
   );
 }
 
-export async function getServerSideProps(ctx) {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const id = ctx.query.id;
 
   // Fetch data from external API
   try {
     const path = process.env.NEXT_PUBLIC_API_URL + `/items/${id}` || "";
-    console.log("path", path);
+
     const res = await fetch(path);
     const data = await res.json();
 
@@ -130,6 +148,6 @@ export async function getServerSideProps(ctx) {
     console.error("Err: ", err);
   }
   return { props: { data: null } };
-}
+};
 
 export default Details;

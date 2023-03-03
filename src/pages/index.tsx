@@ -1,7 +1,7 @@
 import { Pagination } from "@/atoms";
 import LayoutWrapper from "@/layout";
 import { CardComponent } from "@/molecules";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const CardSection = styled.section`
@@ -43,21 +43,36 @@ const SearchContainer = styled.div`
   }
 `;
 
-function Home(props) {
-  console.log(props);
+type ShowListProp = {
+  title: string;
+  author: string;
+  points: string;
+  objectID: string;
+  num_comments: string;
+  relevancy_score: string;
+};
 
+type HomeProps = {
+  data: {
+    hits: [any];
+  };
+};
+
+type Fn = (value: string) => void;
+
+function Home(props: HomeProps) {
   const { data } = props;
   const [dataSt, setDataSt] = useState([]);
   const [searchedValue, setSearchedValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const debounceFn = (fn) => {
-    let timer: any = null;
-    return function (...args) {
-      clearTimeout(timer);
-
+  const debounceFn = (fn: Fn) => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    return function (...args: [any]) {
+      if (timer) clearTimeout(timer);
+      const ctx: any = this;
       timer = setTimeout(() => {
-        fn.apply(this, args);
+        fn.apply(ctx, args);
       }, 1000);
     };
   };
@@ -97,10 +112,9 @@ function Home(props) {
       author,
       points,
       objectID,
-      created_at: time,
       num_comments: comments,
       relevancy_score: relevancy,
-    },
+    }: ShowListProp,
     index: number
   ) => (
     <CardComponent
@@ -109,7 +123,6 @@ function Home(props) {
       comments={comments}
       relevancy={relevancy}
       points={points}
-      time={time}
       key={index}
       id={objectID}
     />

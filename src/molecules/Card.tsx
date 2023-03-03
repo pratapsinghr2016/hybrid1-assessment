@@ -1,5 +1,6 @@
-import styled from "styled-components";
 import Link from "next/link";
+import { useCallback, useMemo } from "react";
+import styled from "styled-components";
 
 const Card = styled.div`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -61,44 +62,130 @@ const TitleContainer = styled.div`
   text-align: center;
 `;
 
-const CardComponent = ({ title, author, id }) => (
-  <Card>
-    <Link
-      href={{
-        pathname: "/details",
-        query: { id },
-      }}
-    >
-      <TitleContainer>
-        <H3>{title || "N/A"}</H3>
-      </TitleContainer>
-      <CardRow>
-        <Title>Author:</Title>{" "}
-        <p
-          style={{
-            textTransform: "capitalize",
-          }}
-        >
-          {author || "N/A"}
-        </p>
-      </CardRow>
-      <CardRow>
-        <Col>
-          <Title>Comments</Title> <p>20K</p>
-        </Col>
-        {/* High | Low | Not Relevant */}
-        <Col>
-          <Title>Relevance</Title>{" "}
-          <Chip style={{ backgroundColor: "green" }}>High</Chip>
-        </Col>
-        {/* Recommended | Not-recommended | Free will */}
-        <Col>
-          <Title>Recommended</Title>{" "}
-          <Chip style={{ backgroundColor: "green" }}>High</Chip>
-        </Col>
-      </CardRow>
-    </Link>
-  </Card>
-);
+type CardComponentProps = {
+  title: string;
+  author: string;
+  id: string;
+  comments: string;
+  relevancy: string;
+  points: string;
+};
+
+const labelObj = {
+  low: {
+    label: "Low",
+    color: "#a3a3a3",
+    border: "2px solid #333",
+  },
+  medium: {
+    label: "Medium",
+    color: "#e7a74e",
+    border: "2px solid #FF5733",
+  },
+  high: {
+    label: "High",
+    color: "#76b376",
+    border: "2px solid green",
+  },
+};
+
+const CardComponent = ({
+  title,
+  comments,
+  relevancy,
+  points,
+  author,
+  id,
+}: CardComponentProps) => {
+  const commentCount = useMemo((): number | string => {
+    let intCount: number | string = Number(comments);
+
+    const getTwoDecimalValue = (num: number) => Math.round(num * 100) / 100;
+
+    if (intCount >= 1000000) {
+      intCount = getTwoDecimalValue(intCount / 1000000) + "M";
+    } else if (intCount >= 1000) {
+      intCount = getTwoDecimalValue(intCount / 1000) + "K";
+    }
+
+    return intCount;
+  }, [comments]);
+
+  const relevancyLabelObj = useMemo(() => {
+    const relevancyInt = relevancy ? Number(relevancy) : 0;
+    if (relevancyInt < 3000) {
+      return labelObj.low;
+    } else if (relevancyInt > 3000 && relevancyInt < 6000) {
+      return labelObj.medium;
+    }
+
+    return labelObj.high;
+  }, [relevancy]);
+
+  const pointsLabelObj = useMemo(() => {
+    const pointsInt = points ? Number(points) : 0;
+    if (pointsInt < 500) {
+      return labelObj.low;
+    } else if (pointsInt > 500 && pointsInt < 1000) {
+      return labelObj.medium;
+    }
+
+    return labelObj.high;
+  }, [points]);
+
+  return (
+    <Card>
+      <Link
+        href={{
+          pathname: "/details",
+          query: { id },
+        }}
+      >
+        <TitleContainer>
+          <H3>{title || "N/A"}</H3>
+        </TitleContainer>
+        <CardRow>
+          <Title>Author:</Title>{" "}
+          <p
+            style={{
+              textTransform: "capitalize",
+            }}
+          >
+            {author || "N/A"}
+          </p>
+        </CardRow>
+        <CardRow>
+          <Col>
+            <Title>Comments</Title> <p>{commentCount}</p>
+          </Col>
+          {/* High | Low | Not Relevant */}
+          <Col>
+            <Title>Relevance</Title>{" "}
+            <Chip
+              style={{
+                backgroundColor: relevancyLabelObj.color,
+                border: relevancyLabelObj?.border,
+              }}
+            >
+              {relevancyLabelObj.label}
+            </Chip>
+          </Col>
+          {/* Recommended | Not-recommended | Free will */}
+          <Col>
+            <Title>Recommended</Title>{" "}
+            <Chip
+              style={{
+                backgroundColor: pointsLabelObj.color,
+                border: pointsLabelObj.border,
+              }}
+            >
+              {pointsLabelObj.label}
+            </Chip>
+          </Col>
+        </CardRow>
+      </Link>
+    </Card>
+  );
+};
 
 export default CardComponent;

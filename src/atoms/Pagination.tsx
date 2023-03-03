@@ -27,7 +27,16 @@ const highlightedStyleObj = {
   borderRadius: "2px",
 };
 
-const Pagination = (props) => {
+type Fn = () => void;
+
+type PaginationProp = {
+  currentPage: number;
+  onNextClick: Fn;
+  onPrevClick: Fn;
+  onPageNumberClick: (pageNumber: number) => void;
+};
+
+const Pagination = (props: PaginationProp) => {
   const { currentPage, onNextClick, onPrevClick, onPageNumberClick } = props;
   const [clickedItem, setClickedItem] = useState(""); // left | number | right
 

@@ -1,9 +1,6 @@
 import LayoutWrapper from "@/layout";
-// import styled from "styled-components";
 
-function Details(props) {
-  console.log(props);
-
+function Details() {
   return (
     <LayoutWrapper>
       <h1>Details page</h1>

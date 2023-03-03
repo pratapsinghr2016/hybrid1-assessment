@@ -54,7 +54,7 @@ function Home(props: HomeProps) {
     let timer: ReturnType<typeof setTimeout> | null = null;
     return function (...args: [any]) {
       if (timer) clearTimeout(timer);
-      const ctx: any = this;
+      const ctx = this;
       timer = setTimeout(() => {
         fn.apply(ctx, args);
       }, 1000);

@@ -1,38 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Hybrid1 assessment
 
-## Getting Started
+**Objective**
 
-First, run the development server:
+> To create a demo application highlighting the various factors involved in development standards like:
+>
+> - Code quality
+> - Modularity
+> - Folder structure
+> - Name convention followed
+> - Optimized usage of technolgy like Virtual DOM
+> - Optimization techniques (Asset optimization, lazyloads, memoization, etc.)
+> - Type checking
+> - Test cases
+> - Scalibility
+> - Standards of design-system
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+**Tech stack used**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Typescript
+  - For static type checking
+- Styled-component
+  - To follow the custom yet adaptable design-system
+- PNPM
+  - As node package manager
+- Next-js
+  - To enable SSR & inbuilt features like file-based routing
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+**General User-flow**
+[![image](https://www.linkpicture.com/q/Untitled-Diagram-Page-1.jpg)](https://www.linkpicture.com/view.php?img=LPic6401ded5a0c95454104563)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+**Profiler report**
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+[![image](https://www.linkpicture.com/q/re1_2.jpg)](https://www.linkpicture.com/view.php?img=LPic6401b068638e9427468683)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+> Note:
+> Here's there's a clear highlighted parts like top-two rows which need the improvement. But before considering the point of improvement there are few points to be considered like:
+>
+> - The application we made is filled with 20 item list. Which unless all items are present on the DOM it will cause the continous work for completing the ocmplete CRP (content rendering path). Which collectively or its better to say that due to React's out of the box batch processing mechanisim we are able to see render time of ~38 ms
+>   But, human eye can notice only 30 frames per second i.e 1000/30 = 33.33 ms but if we consider other factors like network calls & React's internal mechanisim its almost near to what is expected.
 
-## Learn More
+**Other traits**
 
-To learn more about Next.js, take a look at the following resources:
+- Design system : obstained from styled-component
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**POI (Points of improvement)**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Folder structure is not optimum i.e atomic structure of folders can be improved
+- More modularity can be obtained
+- More features like filters can be introduced as its supported by API
+- Performance can be improved
+- If application would have chances to scale then usage of libraries like axios, RTK & ReactQuery comes in picture
 
-## Deploy on Vercel
+**Local setup**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    1) clone the project
+    2) must have node-js install on your PC
+    3) npm install -g pnpm
+    4) create .env.local & add the following value:
+        NEXT_PUBLIC_API_URL =  https://hn.algolia.com/api/v1
+    5) npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+**Author**
+_Name: Rajat Pratap Singh_
+_E-mail: pratapsinghr2016@gmail.com_
+_Linkedin: [Click here](https://www.linkedin.com/in/rajat-pratap-singh-sse/)_
+_Resume:[Click here](https://drive.google.com/file/d/1pik0LQJyyrRmlpT_U_fPuulAvap4OW27/view?usp=sharing)_

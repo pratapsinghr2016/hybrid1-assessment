@@ -62,7 +62,7 @@ const LayoutWrapper = (props: LayoutProps) => {
       <Header title={"Demo App"} />
       <NavBarComponent>
         <StyledLink href="/">Application</StyledLink>
-        <StyledLink href="/">Documentation</StyledLink>
+        <StyledLink href="/docs">Documentation</StyledLink>
       </NavBarComponent>
 
       <main>{props.children}</main>
